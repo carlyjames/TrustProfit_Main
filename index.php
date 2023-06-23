@@ -1,3 +1,39 @@
+<?php
+ include('public/db_conf.php');
+
+ if (isset($_POST['btn'])) {
+     $username = $_POST['username']
+     $email = $_POST['email']
+     $phone = $_POST['phone']
+     $password = $_POST['password']
+     $password_confirmation = $_POST['password_confirmation']
+     $ref_by = $_POST['ref_by']
+
+    if (empty($username)  && empty($email)  && empty($phone)  && empty($password)  && empty($password_confirmation)  && empty($ref_by)   ) {
+        echo '<script> alert("PLEASE FILL ALL SPACES") </script>';
+    }else{
+        $sql = "INSERT INTO `auth_table`(`username`,`email`,`phone`,`password`, `password_confirmation`, `ref_bg`) VALUES('','$username','$email','$phone', '$password', '$password_confirmation', '$ref_by')";
+        $sql_query =  mysqli_query($db_con, $sql);
+        if($sql_query) {
+            echo '<script>alert( "USER CREATED SUCCESSFULLY !!! ")</script>';
+            header('refresh: 3; login.php');
+
+        }else{
+            echo '<script>alert("USER NOT CREATED")</script>';
+
+        }
+
+    }
+}
+
+?>
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -114,29 +150,7 @@
                     </div>
                     <!--end col-->
 
-                    <div class="col-lg-12">
-                      <div class="form-group">
-                        <label
-                          >Full Name <span class="text-danger">*</span></label
-                        >
-                        <div class="position-relative">
-                          <i
-                            data-feather="user-check"
-                            class="fea icon-sm icons"
-                          ></i>
-                          <input
-                            type="text"
-                            class="pl-5 form-control"
-                            name="name"
-                            value=""
-                            id="f_name"
-                            placeholder="Enter Full Name"
-                            required
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <!--end col-->
+
 
                     <div class="col-lg-12">
                       <div class="form-group">
@@ -242,6 +256,7 @@
                       <button
                         class="btn btn-primary btn-block pad"
                         type="submit"
+                        name="btn"
                       >
                         Register
                       </button>
@@ -257,7 +272,7 @@
                         <small class="mr-2 text-dark"
                           >Already have an account
                         </small>
-                        <a href="login.html" class="text-dark font-weight-bold"
+                        <a href="login.php" class="text-dark font-weight-bold"
                           >Login</a
                         >
                       </p>
